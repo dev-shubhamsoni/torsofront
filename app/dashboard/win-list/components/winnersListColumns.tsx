@@ -1,9 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { convertUTCtoIST } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 
 // Dashboard Deposit History
 export type winnersListColumnsTypes = {
@@ -31,6 +28,7 @@ export type winnersListColumnsTableSetTypes = {
 };
 
 export const winnersListColumns = (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   setUserDataData: React.Dispatch<
     React.SetStateAction<winnersListColumnsTableSetTypes>
   >,

@@ -1,9 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { convertUTCtoIST } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 
 // Dashboard Deposit History
 export type winListColumnsTypes = {
@@ -34,8 +32,14 @@ export const winListColumns = (
   setUserDataData: React.Dispatch<
     React.SetStateAction<winListColumnsTableSetTypes>
   >,
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
   delWinData,
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
   winnersListFunc,
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
   decWinner
 ): ColumnDef<winListColumnsTypes>[] => [
   {

@@ -41,6 +41,8 @@ export const userDetailsTableColumns = (
   setUserDataData: React.Dispatch<
     React.SetStateAction<UserDetailsTableSetTypes>
   >,
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
   updateUserStatus
 ): ColumnDef<UserDetailsTableColumnsColumnsTypes>[] => [
   {

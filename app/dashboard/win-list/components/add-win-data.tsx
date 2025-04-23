@@ -30,7 +30,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { bidListColumnsTableSetTypes } from "./winListColumns";
 import {
   useGetSingleGameListNamesQuery,
   useGetSingleMarketListNamesQuery,

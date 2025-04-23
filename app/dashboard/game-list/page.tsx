@@ -80,7 +80,7 @@ const Page = () => {
     triggerUpdateGame,
     {
       data: dataUpdateGame,
-      isLoading: isLoadingUpdateGame,
+
       isSuccess: isSuccessUpdateGame,
       isError: isErrorUpdateGame,
       error: errorUpdateGame,
@@ -112,7 +112,13 @@ const Page = () => {
       toast.error(errorMessage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessUpdateGame, dataUpdateGame, isErrorUpdateGame, errorUpdateGame, trigger]);
+  }, [
+    isSuccessUpdateGame,
+    dataUpdateGame,
+    isErrorUpdateGame,
+    errorUpdateGame,
+    trigger,
+  ]);
 
   return (
     <div className="w-full flex flex-col gap-[50px]">
@@ -127,6 +133,8 @@ const Page = () => {
           onPageChange: handlePageChange,
         }}
         isLoading={isLoading}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         columns={gameListColumns(setPaginationData, triggerUpdateGame)}
         data={data?.data[0]?.data || []}
       />

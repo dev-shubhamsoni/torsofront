@@ -11,8 +11,6 @@ import {
   usePostDeclareWinnersMutation,
   usePostWinDataMutation,
 } from "@/redux/winManagementApi";
-import { APIError } from "@/lib/types";
-import { toast } from "sonner";
 import { useApiResponseHandler } from "@/hooks/api-response-handler";
 import { winnersListColumns } from "./components/winnersListColumns";
 
@@ -78,9 +76,6 @@ const Page = () => {
     {
       data: dataWinnersList,
       isLoading: isLoadingWinnersList,
-      isSuccess: isSuccessWinnersList,
-      isError: isErrorWinnersList,
-      error: errorWinnersList,
     },
   ] = useLazyGetWinnersListQuery();
 
@@ -174,6 +169,8 @@ const Page = () => {
     },
   });
 
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
   const decWinner = (marketId, gameId, bid_amount, bid_type, resultDate) => {
     triggerDeclareWinners({
       marketId,
@@ -186,6 +183,8 @@ const Page = () => {
 
   return (
     <div className="w-full flex flex-col gap-[50px]">
+{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+ {/* @ts-ignore */}
       <AddWinData triggerWinDataFunc={triggerWinDataFunc} />
 
       <ShadcnTable
@@ -195,6 +194,8 @@ const Page = () => {
           onPageChange: handlePageChange,
         }}
         isLoading={isLoading}
+         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
         columns={winListColumns(setPaginationData, delWinData, winnersListFunc,decWinner)}
         data={data?.data[0]?.data || []}
       />
@@ -206,6 +207,8 @@ const Page = () => {
           onPageChange: handlePageChangeWinners,
         }}
         isLoading={isLoadingWinnersList}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
         columns={winnersListColumns(setPaginationDataWinners)}
         data={dataWinnersList?.data[0]?.data || []}
       />

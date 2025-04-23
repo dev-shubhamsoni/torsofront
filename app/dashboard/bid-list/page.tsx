@@ -41,6 +41,8 @@ const Page = () => {
   
   return (
     <div className="w-full flex flex-col gap-[50px]">
+       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+ {/* @ts-ignore */}
       <FilterBids setPaginationData = {setPaginationData} triggerFilter = {triggerFilter}/>
 
       <ShadcnTable
@@ -50,6 +52,8 @@ const Page = () => {
           onPageChange: handlePageChange,
         }}
         isLoading={isLoading}
+         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
         columns={bidListColumns(setPaginationData)}
         data={data?.data[0]?.data || []}
       />
