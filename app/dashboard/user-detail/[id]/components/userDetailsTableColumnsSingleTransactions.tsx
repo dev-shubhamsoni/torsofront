@@ -34,7 +34,7 @@ export type UserDetailsSingleTransactionsTableSetTypes = {
   uid: string | string[] | undefined;
 };
 
-type ChangePaymentStatusType = (
+export type ChangePaymentStatusType = (
   status: "Approved" | "Rejected",
   txnId: string,
   txnType: string,

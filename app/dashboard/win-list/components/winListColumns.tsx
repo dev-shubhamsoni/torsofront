@@ -32,14 +32,14 @@ export const winListColumns = (
   setUserDataData: React.Dispatch<
     React.SetStateAction<winListColumnsTableSetTypes>
   >,
-   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
- // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   delWinData,
-   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
- // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   winnersListFunc,
-   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
- // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   decWinner
 ): ColumnDef<winListColumnsTypes>[] => [
   {
@@ -93,6 +93,7 @@ export const winListColumns = (
       const bid_type = row.getValue("bid_type") as string;
       const win_number = row.getValue("win_number") as number;
       const resultDate = row.getValue("result_date") as Date;
+      const money_settled = row.getValue("money_settled") as boolean;
       return (
         <div className="w-full flex flex-col gap-2">
           <Button
@@ -108,10 +109,28 @@ export const winListColumns = (
           >
             Show Results
           </Button>
-          <Button onClick={() => decWinner(marketId, gameId, win_number, bid_type, resultDate)} className=" bg-green-600">Declare Results</Button>
-          <Button onClick={() => delWinData(id)} className=" bg-red-600">
-            Delete Data
-          </Button>
+          {!money_settled && (
+            <Button
+              onClick={() =>
+                decWinner(
+                  id,
+                  marketId,
+                  gameId,
+                  win_number,
+                  bid_type,
+                  resultDate
+                )
+              }
+              className=" bg-green-600"
+            >
+              Declare Results
+            </Button>
+          )}
+          {!money_settled && (
+            <Button onClick={() => delWinData(id)} className=" bg-red-600">
+              Delete Data
+            </Button>
+          )}
         </div>
       );
     },

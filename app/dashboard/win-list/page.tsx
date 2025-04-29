@@ -171,8 +171,9 @@ const Page = () => {
 
    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
  // @ts-ignore
-  const decWinner = (marketId, gameId, bid_amount, bid_type, resultDate) => {
+  const decWinner = (id,marketId, gameId, bid_amount, bid_type, resultDate) => {
     triggerDeclareWinners({
+      id,
       marketId,
       gameId,
       bid_amount,

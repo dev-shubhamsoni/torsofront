@@ -6,6 +6,9 @@ import DashboardStats from "./components/DashboardStats";
 
 import { useLazyGetUserTransactionListQuery } from "@/redux/dashboardApi";
 import { useEffect, useState } from "react";
+import { usePostChangeTransactionStatusMutation } from "@/redux/userManagementApi";
+import { toast } from "sonner";
+import { APIError } from "@/lib/types";
 
 export default function Page() {
   
@@ -31,6 +34,67 @@ export default function Page() {
       page, 
     }));
   };
+
+  // payment status
+
+    // Payment Status change
+    const [
+      triggerChangeStatus,
+      {
+        data: dataChangeStatus,
+        isSuccess: isSuccessChangeStatus,
+        isError: isErrorChangeStatus,
+        error: errorChangeStatus,
+      },
+    ] = usePostChangeTransactionStatusMutation();
+  
+    const changePaymentStatus = (
+      status: string,
+      id: string,
+      txnType: string,
+      userId: string,
+      amount: number
+    ) => {
+      triggerChangeStatus({ status, tranId: id, tranType:txnType, userMainId:userId, tranAmount:amount });
+    };
+  
+    useEffect(() => {
+      // ✅ Handle successful API response (status: true)
+      if (dataChangeStatus && isSuccessChangeStatus && dataChangeStatus?.status) {
+        toast.success(dataChangeStatus?.message);
+        trigger(transactionHistoryData);
+      }
+  
+      // ✅ Handle API response errors (status: false in API response)
+      if (
+        dataChangeStatus &&
+        isSuccessChangeStatus &&
+        !dataChangeStatus?.status
+      ) {
+        toast.error(dataChangeStatus?.message || "Something went wrong");
+      }
+  
+      // ✅ Handle API request errors (e.g., 401 Unauthorized)
+      if (isErrorChangeStatus && errorChangeStatus) {
+        let errorMessage = "An error occurred";
+  
+        // ✅ Ensure errorChangeStatus is of type APIError
+        if ((errorChangeStatus as APIError)?.data) {
+          const apiError = errorChangeStatus as APIError;
+          errorMessage = apiError.data.message || "Unauthorized access";
+        }
+  
+        toast.error(errorMessage);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+      isSuccessChangeStatus,
+      dataChangeStatus,
+      isErrorChangeStatus,
+      errorChangeStatus,
+      trigger,
+  
+    ]);
   
 
   return (
@@ -43,7 +107,7 @@ export default function Page() {
           onPageChange: handlePageChange,
         }}
         isLoading = {isLoading}
-        columns={transactionHistoryTableColumns(setTransactionHistoryData)}
+        columns={transactionHistoryTableColumns(setTransactionHistoryData, changePaymentStatus)}
         data={data?.data[0]?.data || []}
       />
     </div>

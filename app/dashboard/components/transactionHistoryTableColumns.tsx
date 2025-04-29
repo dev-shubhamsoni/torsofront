@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { convertUTCtoIST } from "@/lib/utils";
+import { ChangePaymentStatusType } from "../user-detail/[id]/components/userDetailsTableColumnsSingleTransactions";
 
 // Dashboard Deposit History
 export type TransactionHistoryTableColumnsTypes = {
@@ -37,7 +38,8 @@ export type TransactionHistorySetTypes = {
 export const transactionHistoryTableColumns = (
   setTransactionHistoryData: React.Dispatch<
     React.SetStateAction<TransactionHistorySetTypes>
-  >
+  >,
+   changePaymentStatus: ChangePaymentStatusType
 ): ColumnDef<TransactionHistoryTableColumnsTypes>[] => [
   {
     accessorKey: "full_name",
@@ -172,8 +174,11 @@ export const transactionHistoryTableColumns = (
     header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const txnId = row.original.id;
       const status = row.getValue("status") as string;
+      const txnType = row.getValue("txn_type") as string;
+      const userId = row.original.userId
+      const amount = row.getValue("amount") as number;
 
       return (
         <DropdownMenu>
@@ -190,14 +195,18 @@ export const transactionHistoryTableColumns = (
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                changePaymentStatus("Approved", txnId, txnType, userId, amount)
+              }
             >
-              Copy Payment ID
+              Accept
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.userId)}
+              onClick={() =>
+                changePaymentStatus("Rejected", txnId, txnType, userId, amount)
+              }
             >
-              Copy User ID
+              Reject
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </DropdownMenuContent>
