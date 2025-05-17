@@ -8,7 +8,7 @@ export const userManagementApi = createApi({
   endpoints: (builder) => ({
     getUserList: builder.query({
       query: (user) =>
-        `/admin/user-list?page=${user?.page}&limit=${user?.limit}&sortBy=${user?.sortBy}&sortOrder=${user?.sortOrder}&search=${user?.search}`,
+        `/admin/user-list?page=${user?.page}&limit=${user?.limit}&sortBy=${user?.sortBy}&sortOrder=${user?.sortOrder}&search=${user?.search}${user?.full_name ? `&full_name=${user.full_name}` : ''}${user?.mobile_number ? `&mobile_number=${user.mobile_number}` : ''}`,
     }),
 
     postAdminUpdateUserProfile: builder.mutation({

@@ -7,6 +7,7 @@ import { marketManagementApi } from "@/redux/marketManagementApi";
 import { gameManagementApi } from "@/redux/gameManagementApi";
 import { bidManagementApi } from "@/redux/bidManagementApi";
 import { winManagementApi } from "@/redux/winManagementApi";
+import { adminManagementApi } from "@/redux/adminManagementApi";
 
 export const store = () => {
   return configureStore({
@@ -18,6 +19,7 @@ export const store = () => {
       [gameManagementApi.reducerPath]: gameManagementApi.reducer,
       [bidManagementApi.reducerPath]: bidManagementApi.reducer,
       [winManagementApi.reducerPath]: winManagementApi.reducer,
+      [adminManagementApi.reducerPath]: adminManagementApi.reducer,
       auth: authReducer,
     },
 
@@ -30,6 +32,7 @@ export const store = () => {
         gameManagementApi.middleware,
         bidManagementApi.middleware,
         winManagementApi.middleware,
+        adminManagementApi.middleware,
       ]),
   });
 };

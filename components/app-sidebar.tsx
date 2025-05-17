@@ -91,6 +91,18 @@ const data = {
         }
       ],
     },
+    {
+      title: "Settings",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "Settings",
+          url: "/dashboard/settings",
+        }
+      ],
+    },
     
   ],
   // navSecondary: [

@@ -10,6 +10,17 @@ import {
 } from "@/redux/userManagementApi";
 import { toast } from "sonner";
 import { APIError, APIResponse } from "@/lib/types";
+import UserFilters from "./components/userFilters";
+
+interface UserDataState {
+  page: number;
+  limit: number;
+  sortBy: string;
+  sortOrder: string;
+  search: string;
+  full_name: string;
+  mobile_number: string | null;
+}
 
 export default function Page() {
   const [trigger, { data, isLoading }] = useLazyGetUserListQuery();
@@ -25,12 +36,14 @@ export default function Page() {
     },
   ] = usePostAdminUpdateUserProfileMutation<APIResponse>();
 
-  const [userDataData, setUserDataData] = useState({
+  const [userDataData, setUserDataData] = useState<UserDataState>({
     page: 1,
     limit: 10,
     sortBy: "",
     sortOrder: "asc",
     search: "",
+    full_name: "",
+    mobile_number: null,
   });
 
   const totalPages = data?.data[0]?.pagination?.totalPages;
@@ -103,10 +116,9 @@ export default function Page() {
     trigger,
   ]);
 
-
-
   return (
     <div className="w-full flex flex-col gap-[50px]">
+      <UserFilters setUserDataData={setUserDataData} trigger={trigger} />
       <ShadcnTable
         pagination={{
           currentPage: userDataData.page,

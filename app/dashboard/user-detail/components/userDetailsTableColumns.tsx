@@ -34,16 +34,19 @@ export type UserDetailsTableSetTypes = {
   sortBy: string;
   sortOrder: string;
   search: string;
+  full_name: string;
+  mobile_number: string | null;
 };
 
-// ✅ Convert to a function that accepts `setUserDataData`
+type UpdateUserStatusType = (
+  uid: string,
+  key: "betting" | "transfer" | "active",
+  value: boolean
+) => void;
+
 export const userDetailsTableColumns = (
-  setUserDataData: React.Dispatch<
-    React.SetStateAction<UserDetailsTableSetTypes>
-  >,
-   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
- // @ts-ignore
-  updateUserStatus
+  setUserDataData: React.Dispatch<React.SetStateAction<UserDetailsTableSetTypes>>,
+  updateUserStatus: UpdateUserStatusType
 ): ColumnDef<UserDetailsTableColumnsColumnsTypes>[] => [
   {
     accessorKey: "full_name",
