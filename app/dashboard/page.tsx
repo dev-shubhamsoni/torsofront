@@ -9,22 +9,40 @@ import { useEffect, useState } from "react";
 import { usePostChangeTransactionStatusMutation } from "@/redux/userManagementApi";
 import { toast } from "sonner";
 import { APIError } from "@/lib/types";
+import DashboardFilters from "./components/DashboardFilters";
+
+interface TransactionHistoryData {
+  page: number;
+  limit: number;
+  sortBy: string;
+  sortOrder: string;
+  search: string;
+  status?: string;
+  full_name?: string;
+  mobile_number?: string;
+  txn_type?: string;
+}
 
 export default function Page() {
   
   const [trigger, { data,isLoading }] = useLazyGetUserTransactionListQuery();
-  const [transactionHistoryData, setTransactionHistoryData] = useState({
-    page : 1,
-    limit : 10,
-    sortBy : "",
-    sortOrder : "desc",
-    search : ""
+  const [transactionHistoryData, setTransactionHistoryData] = useState<TransactionHistoryData>({
+    page: 1,
+    limit: 10,
+    sortBy: "",
+    sortOrder: "desc",
+    search: "",
+    status: "",
+    full_name: "",
+    mobile_number: "",
+    txn_type: ""
   })
 
   const totalPages = data?.data[0]?.pagination?.totalPages;
 
   useEffect(() => {
     trigger(transactionHistoryData);
+    console.log("transactionHistoryData",transactionHistoryData)
   }, [ trigger, transactionHistoryData]);
 
   const handlePageChange = (page: number) => {
@@ -100,6 +118,7 @@ export default function Page() {
   return (
     <div className="w-full flex flex-col gap-[50px]">
       <DashboardStats />
+      <DashboardFilters setTransactionHistoryData={setTransactionHistoryData} trigger={trigger} />
       <ShadcnTable
         pagination={{
           currentPage : transactionHistoryData.page,
